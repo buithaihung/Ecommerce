@@ -1,50 +1,59 @@
 import React, { Fragment, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getProductsDetails, clearErrors } from "../../actions/productActions";
+import { getProductDetails, clearErrors } from "../../actions/productActions";
 import { useAlert } from "react-alert";
 import Loader from "../layout/Loader";
-import {Carousel} from 'react-bootstrap';
+import Carousel from "react-bootstrap/Carousel";
+import { useParams } from "react-router-dom";
 import MetaData from "../layout/MetaData";
-const ProductDetails = ({ match }) => {
+const ProductDetails = () => {
+  const params = useParams();
   const dispatch = useDispatch();
   const { loading, error, product } = useSelector(
     (state) => state.productDetails
   );
   const alert = useAlert();
   useEffect(() => {
-    dispatch(getProductsDetails(match.params.id));
+    dispatch(getProductDetails(params.id));
     if (error) {
       alert.error(error);
       dispatch(clearErrors());
     }
-  }, [alert, error, match.params.id,dispatch]);
+  }, [alert, error, params.id, dispatch]);
   return (
     <Fragment>
+      <MetaData title={product.name} />
       {loading ? (
         <Loader />
       ) : (
         <Fragment>
           <div className="row f-flex justify-content-around">
             <div className="col-12 col-lg-5 img-fluid" id="product_image">
-              <Carousel pause='hover'>
-                  {product.images && product.images.map(image => (
-                      <Carousel.Item key={image.public_id}>
-                          <img className="d-block w-100" src={image.url} alt={product.title}/>
-                      </Carousel.Item>
+              <Carousel pause="hover">
+                {product.images &&
+                  product.images.map((image) => (
+                    <Carousel.Item key={image.public_id}>
+                      <img
+                        className="d-block w-100"
+                        src={image.url}
+                        alt={product.title}
+                      />
+                    </Carousel.Item>
                   ))}
               </Carousel>
             </div>
 
             <div className="col-12 col-lg-5 mt-5">
-              <h3>
-                {product.name}
-              </h3>
+              <h3>{product.name}</h3>
               <p id="product_id">Product # {product._id}</p>
 
               <hr />
 
               <div className="rating-outer">
-                <div className="rating-inner" style={{ width: `${(product.ratings / 5) * 100}%` }}></div>
+                <div
+                  className="rating-inner"
+                  style={{ width: `${(product.ratings / 5) * 100}%` }}
+                ></div>
               </div>
               <span id="no_of_reviews">({product.numOfReviews} Reviews)</span>
 
@@ -74,15 +83,19 @@ const ProductDetails = ({ match }) => {
               <hr />
 
               <p>
-                Status: <span id="stock_status" className={product.stock>0?'greenColor':'redColor'}>{product.stock >0 ?'In Stock' : 'Out of Stock'}</span>
+                Status:{" "}
+                <span
+                  id="stock_status"
+                  className={product.stock > 0 ? "greenColor" : "redColor"}
+                >
+                  {product.stock > 0 ? "In Stock" : "Out of Stock"}
+                </span>
               </p>
 
               <hr />
 
               <h4 className="mt-2">Description:</h4>
-              <p>
-                {product.description}
-              </p>
+              <p>{product.description}</p>
               <hr />
               <p id="product_seller mb-3">
                 Sold by: <strong>{product.seller}</strong>
