@@ -1,7 +1,7 @@
 import React, { Fragment } from "react";
 import "../../App.css";
 import Search from "./Search";
-import { Route } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 const Header = () => {
   return (
     <Fragment>
@@ -13,7 +13,9 @@ const Header = () => {
         </div>
 
         <div className="col-12 col-md-6 mt-2 mt-md-0">
+            <Routes>
               <Route render={({ history }) => <Search history={history} />} />
+            </Routes>
         </div>
 
         <div className="col-12 col-md-3 mt-4 mt-md-0 text-center">
