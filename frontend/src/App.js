@@ -26,8 +26,8 @@ function App() {
             <Route path="/product/:id" element={<ProductDetails />} exact />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
-            <Route exact path="/me" element={<ProtectedRoute> <Profile/> </ProtectedRoute>} />
           </Routes>
+          <ProtectedRoute exact path="/me" element={<Profile />} />
         </div>
         <Footer />
       </div>
