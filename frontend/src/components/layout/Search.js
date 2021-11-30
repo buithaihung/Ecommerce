@@ -1,15 +1,16 @@
-import React,{useState} from "react";
-
-const Search = ({history}) => {
-    const [keyword,setKeyword] =useState('');
-    const searchHandler = (e) => {
-         e.preventDefault();
-         if(keyword.trim()) {
-             history.push(`/search/${keyword}`)
-         } else {
-             history.push('/')
-         }
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+const Search = () => {
+  let navigate = useNavigate();
+  const [keyword, setKeyword] = useState("");
+  const searchHandler = (e) => {
+    e.preventDefault();
+    if (keyword.trim()) {
+      navigate(`/search/${keyword}`);
+    } else {
+      navigate("/");
     }
+  };
   return (
     <form onSubmit={searchHandler}>
       <div className="input-group">
