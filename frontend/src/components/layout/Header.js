@@ -9,6 +9,7 @@ const Header = () => {
   const alert = useAlert();
   const dispatch = useDispatch();
   const { user, loading } = useSelector((state) => state.auth);
+  const { cartItems } = useSelector((state) => state.cart);
   const logoutHandler = () => {
     dispatch(logout());
     alert.success('Logged out successfully');
@@ -18,9 +19,9 @@ const Header = () => {
       <nav className="navbar row">
         <div className="col-12 col-md-3">
           <div className="navbar-brand">
-            <a href="/">
+            <Link to="/">
               <img src="/images/logo.png" alt="" />
-            </a>
+            </Link>
           </div>
         </div>
 
@@ -34,14 +35,14 @@ const Header = () => {
               Cart
             </span>
             <span className="ml-1" id="cart_count">
-              2
+              {cartItems.length}
             </span>
           </Link>
           {user ? (
             <div className="ml-4 dropdown d-inline">
               <Link
                 to="!#"
-                className="btn dropdown-toggle text-white"
+                className="btn dropdown-toggle text-white mr-4"
                 type="button"
                 id="dropDownMenuButton"
                 data-toggle="dropdown"

@@ -6,24 +6,27 @@ import Loader from "../layout/Loader";
 import { Link } from "react-router-dom";
 import { login, clearErrors } from "../../actions/userActions";
 import { useNavigate } from "react-router-dom";
-const Login = ({ history }) => {
+import { useLocation } from "react-router-dom";
+const Login = () => {
   let navigate = useNavigate();
+  let location = useLocation();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { isAuthenticated, error, loading } = useSelector(
     (state) => state.auth
   );
+  const redirect = location.search ? location.search.split('=')[1] : '/'
   const alert = useAlert;
   const dispatch = useDispatch();
   useEffect(() => {
     if (isAuthenticated) {
-      navigate(`/`);
+      navigate(`/${redirect}`);
     }
     if (error) {
       alert.error(error);
       dispatch(clearErrors());
     }
-  }, [dispatch, alert, isAuthenticated, error, history, navigate]);
+  }, [dispatch, alert, isAuthenticated, error, navigate,redirect]);
   const submitHandler = (e) => {
     e.preventDefault();
     dispatch(login(email, password));
