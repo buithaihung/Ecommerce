@@ -15,18 +15,18 @@ const Login = () => {
   const { isAuthenticated, error, loading } = useSelector(
     (state) => state.auth
   );
-  const redirect = location.search ? `/${location.search.split('=')[1]}` : '/'
+  // const redirect = location.search ? `${location.search.split('=')[1]}` : '/'
   const alert = useAlert;
   const dispatch = useDispatch();
   useEffect(() => {
     if (isAuthenticated) {
-      navigate(`${redirect}`);
+      navigate(`/`);
     }
     if (error) {
       alert.error(error);
       dispatch(clearErrors());
     }
-  }, [dispatch, alert, isAuthenticated, error, navigate,redirect]);
+  }, [dispatch, alert, isAuthenticated, error, navigate]);
   const submitHandler = (e) => {
     e.preventDefault();
     dispatch(login(email, password));
