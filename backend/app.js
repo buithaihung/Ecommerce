@@ -5,6 +5,7 @@ const cookieParser = require("cookie-parser");
 const fileUpload = require("express-fileupload");
 const bodyparser = require("body-parser");
 const dotenv = require("dotenv");
+const path = require("path");
 //seting up config file
 dotenv.config({ path: "backend/config/config.env" });
 app.use(express.json());
@@ -22,6 +23,12 @@ app.use("/api/v1", products);
 app.use("/api/v1", auth);
 app.use("/api/v1", order);
 app.use("/api/v1", payment);
+if (process.env.NODE_ENV === "PRODUCTION") {
+  app.use(express.static(path.join(__dirname, "../frontend/build")));
+  app.get("*", (req, res) => {
+    res.sendFile(path.resolve(__dirname, "../frontend/build/index.html"));
+  });
+}
 //Middleware to handler errors
 app.use(errorMiddleware);
 module.exports = app;
