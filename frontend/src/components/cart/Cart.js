@@ -7,9 +7,6 @@ import { useNavigate } from "react-router-dom";
 const Cart = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { isAuthenticated } = useSelector(
-    (state) => state.auth
-  );
   const { cartItems } = useSelector((state) => state.cart);
   const removeCartItemHandler = (id) => {
     dispatch(removeItemFromCart(id));
@@ -25,11 +22,7 @@ const Cart = () => {
     dispatch(addItemToCart(id, newQty));
   };
   const checkoutHandler = () => {
-    if(!isAuthenticated){
-      navigate('/login');
-    } else {
-      navigate('/shipping')
-    }
+    navigate('/login?redirect=shipping');
   }
   return (
     <Fragment>
