@@ -41,7 +41,7 @@ const Header = () => {
           {user ? (
             <div className="ml-4 dropdown d-inline">
               <Link
-                to="!#"
+                to="/"
                 className="btn dropdown-toggle text-white mr-4"
                 type="button"
                 id="dropDownMenuButton"
